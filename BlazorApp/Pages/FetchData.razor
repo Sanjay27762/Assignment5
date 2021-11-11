@@ -1,0 +1,61 @@
+﻿@page "/CharacterList"
+
+@using BlazorApp.Data
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+<input @bind="Name" placeholder="Enter your name" />
+<br />
+<input @bind="Age" type="number" placeholder="Enter your age" />
+<br />
+<input @bind="Profession" placeholder="Enter your prefession" />
+<br />
+Is fictional : 
+<input @bind="IsFictional" type="checkbox"  />
+<br />
+<button class="btn btn-success" @onclick="UpdateTable">Add Character</button>    
+<br />
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+                <th>Is Fictonal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var character in characters)
+            {
+                <tr>
+                    <td>@character.name</td>
+                    <td>@character.age.ToString()</td>
+                    <td>@character.profession</td>
+                    <td>@character.isFictional.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+@code {  
+    private string Name { get; set; }
+    private string Age { get; set; }
+    private string Profession { get; set; }
+    private string IsFictional { get; set; }
+    private List<BlazorApp.Data.Character> characters = new List<BlazorApp.Data.Character>();
+    
+    private void UpdateTable()
+    {
+        Character c = new Character();
+        c.name = Name;
+        c.age = int.Parse(Age);
+        c.profession = Profession;
+        c.isFictional = bool.Parse(IsFictional);        
+        characters.Add(c);
+    }
+}
